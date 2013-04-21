@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ *   Main module file
+ */
+
+
+/**
+ * Implements hook_user_insert().
+ * 
+ * We test if this new account is created by admin user or 
+ * by anonymouse through registration form and show 
+ * corresponded messages.
+ *
+ * @see http://api.drupal.org/api/drupal/modules!user!user.api.php/function/hook_user_insert/7.
+ */
+function custom_registration_user_insert(&$edit, $account, $category) {
+  // Get current activated account.
+	global $user;
+	
+	if (!$user->uid) {
+		// Anonymouse user account's uid is empty.
+		drupal_set_message('Your account information had been inserted into database.');
+	}
+	else {
+		// This account is created by logined user.
+		drupal_set_message('New created account information had been inserted into database.');
+	}
+	
+	// If you enabled devel module, uncomment following codes to see 
+	// what's inside $account or $user through codes.
+	// dpm($account);
+	// dpm($user);
+}
